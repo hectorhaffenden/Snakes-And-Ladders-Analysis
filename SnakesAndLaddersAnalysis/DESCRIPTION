@@ -1,11 +1,10 @@
-Package: SandL
+Package: SnakesAndLaddersAnalysis
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Play and analyses the game of Snakes and Ladders.
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Hector haffenden
+Maintainer: Hector Haffenden <haffendenh@cardiff.ac.uk>
+Description: Plays and analyses the game of Snakes and Ladders. This is part of a project for programming and statistics.
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
