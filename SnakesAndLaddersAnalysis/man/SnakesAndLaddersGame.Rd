@@ -1,4 +1,4 @@
-\name{hello}
+\name{SnakesAndLaddersGame}
 \alias{hello}
 \title{Hello, World!}
 \usage{
