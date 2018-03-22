@@ -1,0 +1,362 @@
+Snakes And Ladders Presentation
+========================================================
+author: Hector Haffenden and Sam Davies
+width: 1440
+height: 1440
+date: 2018
+autosize: true
+transition: linear
+incremental: false
+
+A Statistical analysis of snakes and ladders
+========================================================
+type: sub-section
+- Hector Haffenden <haffendenh@cardiff.ac.uk> 
+- Sam Davies <daviess@cardiff.ac.uk>
+- This presentation will walk you through our process and results.
+
+First iteration of Snakes and Ladders.
+========================================================
+
+```{r}
+SnakesAndLaddersGame <- function(number.of.players){
+  dice <- c(1, 2, 3, 4, 5, 6) 
+  last.position <- 0
+  current.position <- 0
+  while(all(current.position < 100)) {
+    current.position <- current.position + sample(dice, replace = TRUE)
+    if (current.position == 1){
+      current.position = 38
+    } else 
+      if (current.position == 4){
+        current.position = 14
+      } else{}
+  }
+}
+```
+
+- As we can see this is some very inefficient code.
+- So how can we improve this?
+- After research we find out r is very efficient with vectors and matrices.
+- This led to our next iteration.
+
+
+Second and final iteration.
+========================================================
+
+```{r}
+SnakesAndLaddersGame <- function(number.of.players){
+  dice <- c(1, 2, 3, 4, 5, 6)
+  snakes.and.ladders <- rbind(c(1, 38), c(4, 14), c(9, 31), c(16, 6), c(21, 42), c(28, 84), c(36, 44), c(48, 26), c(49, 11), c(51, 67), c(56, 53), c(62, 19), c(64, 60), c(71, 91), c(80, 100), c(87, 24), c(93, 73), c(95, 75), c(98, 78))
+  move.with.snakes.and.ladders <- 1:100
+  move.with.snakes.and.ladders[snakes.and.ladders[,1]] <- snakes.and.ladders[,2]
+  last.position <- 0
+  current.position <- NULL
+  game.action <- NULL
+  while(all(current.position < 100)) {
+    current.position <- last.position + sample(dice, number.of.players, replace = TRUE)
+    last.position <- current.position
+    last.position <- move.with.snakes.and.ladders[current.position]
+    game.action <- rbind(game.action, c(current.position))
+  }
+  game.action
+}
+SnakesAndLaddersGame(10)
+```
+- Now we can play Snakes and Ladders with as many players as our computers can handle, and it is very efficient allowing millions of players.
+
+
+Optimizing this code
+========================================================
+
+- This led to a very efficient game. Able to run 30m+ games on an average computer relativly quickly. 
+- I did optimize this slightly. For example, how to define our dice.
+```{r}
+library(microbenchmark)
+dice <- c(1, 2, 3, 4, 5, 6)
+dice.roll1 <- sample(dice, 2, replace = TRUE)
+dice.roll2 <- sample(1:6, 2, replace = TRUE)
+dice.roll3 <- sample(c(1,2,3,4,5,6), 2, replace = TRUE)
+microbenchmark(sample(dice, 2, replace = TRUE), sample(1:6, 2, replace = TRUE), sample(c(1,2,3,4,5,6), 2, replace = TRUE), times = 100)
+```
+
+- From this we see that using dice.roll1 here is the most efficient over lots of iterations, but dice.roll2 is often better in the short term.
+- This may seem like a small optimization but over millions of iterations it will add up.
+
+Optimizing this code
+========================================================
+We can also test these differences by changeing them, inside the function then running a test and comparing the results. Using "dice.roll1" drastically decreases the time for our function to run, especially when the number of players heads towards the millions.
+
+Here we can test the differences between "dice <- c(1,2,3,4,5,6)" and "1:6".
+```{r}
+system.time(result <- SnakesAndLaddersGame(300000))
+
+```
+```{r, echo = FALSE}
+SnakesAndLaddersGameDiceRoll2 <- function(number.of.players){
+  snakes.and.ladders <- rbind(c(1, 38), c(4, 14), c(9, 31), c(16, 6), c(21, 42), c(28, 84), c(36, 44), c(48, 26), c(49, 11), c(51, 67), c(56, 53), c(62, 19), c(64, 60), c(71, 91), c(80, 100), c(87, 24), c(93, 73), c(95, 75), c(98, 78))
+  move.with.snakes.and.ladders <- 1:100
+  move.with.snakes.and.ladders[snakes.and.ladders[,1]] <- snakes.and.ladders[,2]
+  last.position <- 0
+  current.position <- NULL
+  game.action <- NULL
+  while(all(current.position < 100)) {
+    current.position <- last.position + sample(1:6, number.of.players, replace = TRUE)
+    last.position <- current.position
+    last.position <- move.with.snakes.and.ladders[current.position]
+    game.action <- rbind(game.action, c(current.position))
+  }
+  game.action
+}
+```
+```{r}
+system.time(result <- SnakesAndLaddersGameDiceRoll2(300000))
+
+```
+- We can optimize this all day, but lets get on with some analysis!
+
+First we plot
+========================================================
+Plotting can give us a good idea on what is going on. Please play around with this, just input the SnakesAndLaddersGame with 1-7 players, it comes up with some nail-biting games!
+```{r}
+
+PlotMyGame <- function(my.game.output){
+  x <- my.game.output
+  if (length(x[1,]) <= 7) {
+    x <- my.game.output
+    z <- 1:nrow(x)
+    plot(x[,1], z, main = "Players position on each roll", type = "s", ylab = "Number of rolls", xlab = "Players position", col = "red", xlim = c(0, 100))
+    i <- 1
+    l <- 1
+    colours <- c("red", "black", "green", "yellow", "blue", "magenta", "cyan", "grey")
+    legend.names <- c("Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6", "Player 7")
+    
+    while (i < length(x[1,])){
+      i <- i+1
+      lines(x[,i], z, col = colours[i])
+    }
+    legend(x[,1][1], nrow(x), legend = legend.names[1:length(x[1,])], fill = colours[1:length(x[1,])], cex=0.8)
+  } else {
+    stop("can only plot 7 or less players")
+  }
+}
+```
+
+Let's play around with some plots
+========================================================
+title: false
+
+```{r}
+PlotMyGame(SnakesAndLaddersGame(1))
+PlotMyGame(SnakesAndLaddersGame(3))
+```
+***
+```{r}
+PlotMyGame(SnakesAndLaddersGame(5))
+
+PlotMyGame(SnakesAndLaddersGame(7))
+
+```
+
+
+
+Average turns to win given number of players and number of trials.
+========================================================
+```{r}
+AverageMovesToWin <- function(number.of.players = 2, number.of.trials = 1000){
+  x <- 0
+  for (i in 1:number.of.trials){
+    x <- x + nrow(SnakesAndLaddersGame(number.of.players))
+  }
+  x/number.of.trials
+  
+}
+AverageMovesToWin(number.of.players = 100, number.of.trials = 100)
+```
+
+- Play around with the number of players, see what it seems to converge to ;)
+
+```{r}
+vector.average.wins <- c(AverageMovesToWin(1), AverageMovesToWin(2), AverageMovesToWin(3), AverageMovesToWin(4), AverageMovesToWin(5), AverageMovesToWin(6), AverageMovesToWin(7))
+vector.average.wins
+
+```
+- We can see as the number of trials and players increases, the average turns to win converges to 7. This makes sense as the optimal game is 7 moves, so we are more likely that a player will play this 'perfect game'.
+
+Most common square.
+========================================================
+- Here is the code that will find the most common square given a set number of players and a number of trials. 
+
+```{r}
+MostCommonSquare <- function(number.of.players = 1, number.of.trials = 100){
+  x <- NULL
+  z <- NULL
+  for (i in 1:number.of.trials){
+    x <- rbind(x, SnakesAndLaddersGame(number.of.players))
+  }
+  y <- as.data.frame(table(x))
+  for (i in 1:length(y[,1])){
+    if(((y[i,2]) == max(y[,2])) == TRUE){
+      z <- rbind(z, as.vector(y[i,1]))
+    }
+  }
+  z
+}
+MostCommonSquare(2, number.of.trials = 1000)
+```
+
+So what is the most common square?
+========================================================
+- We can run lots of trials and see the most common square for each number of players. Change n to how powerful your computer is :).
+
+```{r}
+n <- 500
+vctor.most.common.square <- c(MostCommonSquare(1, n), MostCommonSquare(2, n), MostCommonSquare(3, n), MostCommonSquare(4, n), MostCommonSquare(5, n), MostCommonSquare(6, n), MostCommonSquare(7, n))
+vctor.most.common.square
+```
+- Here we have checked, dependent on the number of players, which square is the most common.
+
+- Also note that we can see when we do only a few trials that we often get two or more squares being the most common.
+```{r}
+MostCommonSquare(2, number.of.trials = 1)
+```
+
+
+Frequency of all the squares
+========================================================
+
+- We can also get a clear picture of the frequency of all the squares on the board given a number of players and trials.
+```{r}
+FrequencyOfSquaresByPercentage <- function(number.of.players = 2, number.of.trials = 100, vector = FALSE) {
+  x <- NULL
+  for (i in 1:number.of.trials){
+    x <- rbind(x, SnakesAndLaddersGame(number.of.players))
+  }
+  y <- as.data.frame(table(x))
+  o <- NULL
+  for (i in 1:nrow(y)){
+    o <- rbind(o, (y[i,2] * 100)/sum(y[,2]) )
+  }
+  if (vector == TRUE){
+    as.vector(o)
+  } else {
+    o
+  }
+}
+FrequencyOfSquaresByPercentage(2, 100, vector = TRUE)
+```
+
+
+Frequency of all the squares
+========================================================
+Run the following code without the hashtage to see the frequency next to the square number. 
+
+```{r}
+# FrequencyOfSquaresByPercentage(2, 100)
+
+```
+
+- Plotting allows you to see the distribution of squares landed on.
+
+```{r}
+plot(FrequencyOfSquaresByPercentage(2, 100))
+```
+
+- We can run lots of analysis on this data. 
+```{r}
+summary(FrequencyOfSquaresByPercentage(2, 100))
+```
+
+
+
+
+
+
+Most importent Ladders
+========================================================
+Now we will determine which ladders are the most importent. First we need to write some code which outputs the snakes and ladders that the winner lands on.
+```{r}
+ImportenceOfTheLadders <- function(number.of.players = 2){
+  z <- SnakesAndLaddersGame(number.of.players)
+  x <- NULL
+  snakes.and.ladders <- rbind(c(1, 38), c(4, 14), c(9, 31), c(16, 6), c(21, 42), c(28, 84), c(36, 44), c(48, 26), c(49, 11), c(51, 67), c(56, 53), c(62, 19), c(64, 60), c(71, 91), c(80, 100), c(87, 24), c(93, 73), c(95, 75), c(98, 78))
+  for (h in 1:number.of.players){
+    if (z[nrow(z), h] >= 100){
+      for (i in 1:19){
+        if (is.element(snakes.and.ladders[i], z[,h])){
+          x <- rbind(x, i)
+        }
+      }
+    }
+  }
+  y <- as.data.frame(table(x))
+  print(y)
+}
+ImportenceOfTheLadders(7)
+```
+
+
+
+Most importent Ladders
+========================================================
+We can now use a feature in the code, that is when playing with millions of players you will get more than one winner, this is because regardless of who goes first, everyone gets the same amount of turns. Due to the millions of players part, the likelyhood of many players playing a perfect game is high. This results in us seeing which are the most importent ladders. As it only counts the players that won, and whilst playing with millions of players it is always within 7 rolls, we can see which ones are essential to winning (the ones with the highest frequency). Note that the 'x' value you see refers to the snake or ladder seen in the above code, for example x = 1 refers to the first ladder in the code where we define the 'snakes.and.ladders' which is the ladder from square 1 to square 38.
+
+```{r}
+ImportenceOfTheLadders(100000)
+```
+
+- As we increase the number of players into the millions, we can conclude that the most importent snakes, in order, are: 1(1, 38), 10(51, 67) and 14 (71, 91), 6 (28, 84), 2 (4, 14), 8 (48, 26).
+- We can conclude that the most importent ladder is (1, 38).
+
+
+Most powerful Snakes
+========================================================
+Here we will do a similar task as before, but look for the losing player, that is the player with the lowest score at the end of the game. 
+
+```{r}
+ImportenceOfTheSnakes <- function(number.of.players = 2){
+  z <- SnakesAndLaddersGame(number.of.players)
+  x <- NULL
+    q <- min(z[nrow(z),])
+  snakes.and.ladders <- rbind(c(1, 38), c(4, 14), c(9, 31), c(16, 6), c(21, 42), c(28, 84), c(36, 44), c(48, 26), c(49, 11), c(51, 67), c(56, 53), c(62, 19), c(64, 60), c(71, 91), c(80, 100), c(87, 24), c(93, 73), c(95, 75), c(98, 78))
+  for (h in 1:number.of.players){
+    if (z[nrow(z), h] == q){
+      for (i in 1:19){
+        if (is.element(snakes.and.ladders[i], z[,h])){
+          x <- rbind(x, i)
+        }
+      }
+    }
+  }
+  y <- as.data.frame(table(x))
+  print(y)
+}
+ImportenceOfTheSnakes(7) 
+```
+
+
+
+Most powerful Snakes
+========================================================
+
+
+```{r}
+ImportenceOfTheSnakes(100000) 
+```
+
+- Using similar logic as before, we find the most powerful snakes, that is, if you land on them you are most likly to lose compared to other snakes, are: 4 (16, 6), 9 (49, 11), 1 (1, 38), 2 (4, 14), 3 (9, 31), 7 (36, 44), 5 (21, 42).
+- What is very interesting here is that these arn't all snakes. Some ladders have appeared. Even the ladder that is almost required to win, (1, 38) often results in a loss. - We can conclude that the most powerful ladder is (16, 6).
+
+
+
+Creating a package.
+========================================================
+So lets make this into a nice package.
+
+
+Other methods.
+========================================================
+
+
+
+
