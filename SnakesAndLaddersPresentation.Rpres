@@ -163,6 +163,56 @@ PlotMyGame(SnakesAndLaddersGame(7))
 
 
 
+Frequency of all the squares
+========================================================
+
+- We can also get a clear picture of the frequency of all the squares on the board given a number of players and trials.
+```{r}
+FrequencyOfSquaresByPercentage <- function(number.of.players = 2, number.of.trials = 100, vector = FALSE) {
+  x <- NULL
+  for (i in 1:number.of.trials){
+    x <- rbind(x, SnakesAndLaddersGame(number.of.players))
+  }
+  y <- as.data.frame(table(x))
+  o <- NULL
+  for (i in 1:nrow(y)){
+    o <- rbind(o, (y[i,2] * 100)/sum(y[,2]) )
+  }
+  if (vector == TRUE){
+    as.vector(o)
+  } else {
+    o
+  }
+}
+FrequencyOfSquaresByPercentage(2, 100, vector = TRUE)
+```
+
+
+Frequency of all the squares
+========================================================
+Run the following code without the hashtage to see the frequency next to the square number.
+
+```{r}
+# FrequencyOfSquaresByPercentage(2, 100)
+
+```
+
+- Plotting allows you to see the distribution of squares landed on.
+
+```{r}
+plot(FrequencyOfSquaresByPercentage(2, 100))
+```
+
+- We can run lots of analysis on this data.
+```{r}
+summary(FrequencyOfSquaresByPercentage(2, 100))
+```
+
+
+
+
+
+
 Average turns to win given number of players and number of trials.
 ========================================================
 ```{r}
@@ -223,55 +273,6 @@ vctor.most.common.square
 ```{r}
 MostCommonSquare(2, number.of.trials = 1)
 ```
-
-
-Frequency of all the squares
-========================================================
-
-- We can also get a clear picture of the frequency of all the squares on the board given a number of players and trials.
-```{r}
-FrequencyOfSquaresByPercentage <- function(number.of.players = 2, number.of.trials = 100, vector = FALSE) {
-  x <- NULL
-  for (i in 1:number.of.trials){
-    x <- rbind(x, SnakesAndLaddersGame(number.of.players))
-  }
-  y <- as.data.frame(table(x))
-  o <- NULL
-  for (i in 1:nrow(y)){
-    o <- rbind(o, (y[i,2] * 100)/sum(y[,2]) )
-  }
-  if (vector == TRUE){
-    as.vector(o)
-  } else {
-    o
-  }
-}
-FrequencyOfSquaresByPercentage(2, 100, vector = TRUE)
-```
-
-
-Frequency of all the squares
-========================================================
-Run the following code without the hashtage to see the frequency next to the square number.
-
-```{r}
-# FrequencyOfSquaresByPercentage(2, 100)
-
-```
-
-- Plotting allows you to see the distribution of squares landed on.
-
-```{r}
-plot(FrequencyOfSquaresByPercentage(2, 100))
-```
-
-- We can run lots of analysis on this data.
-```{r}
-summary(FrequencyOfSquaresByPercentage(2, 100))
-```
-
-
-
 
 
 
