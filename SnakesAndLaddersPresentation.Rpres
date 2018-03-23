@@ -11,23 +11,26 @@ incremental: false
 A Statistical analysis of snakes and ladders
 ========================================================
 type: sub-section
-- Hector Haffenden <haffendenh@cardiff.ac.uk> 
+- Hector Haffenden <haffendenh@cardiff.ac.uk>
 - Sam Davies <daviess@cardiff.ac.uk>
 - This presentation will walk you through our process and results.
+- Please also note that all of the functions used here have been made into a package with nice help files which you can access from this link <https://github.com/hectorhaffenden/SnakesAndLaddersAnalysis>.
+- Just follow the readme file.
+- Also note that my package does pass all of the checks done within RStudio.
 
 First iteration of Snakes and Ladders.
 ========================================================
 
 ```{r}
 SnakesAndLaddersGame <- function(number.of.players){
-  dice <- c(1, 2, 3, 4, 5, 6) 
+  dice <- c(1, 2, 3, 4, 5, 6)
   last.position <- 0
   current.position <- 0
   while(all(current.position < 100)) {
     current.position <- current.position + sample(dice, replace = TRUE)
     if (current.position == 1){
       current.position = 38
-    } else 
+    } else
       if (current.position == 4){
         current.position = 14
       } else{}
@@ -69,7 +72,7 @@ SnakesAndLaddersGame(10)
 Optimizing this code
 ========================================================
 
-- This led to a very efficient game. Able to run 30m+ games on an average computer relativly quickly. 
+- This led to a very efficient game. Able to run 30m+ games on an average computer relativly quickly.
 - I did optimize this slightly. For example, how to define our dice.
 ```{r}
 library(microbenchmark)
@@ -130,7 +133,7 @@ PlotMyGame <- function(my.game.output){
     l <- 1
     colours <- c("red", "black", "green", "yellow", "blue", "magenta", "cyan", "grey")
     legend.names <- c("Player 1", "Player 2", "Player 3", "Player 4", "Player 5", "Player 6", "Player 7")
-    
+
     while (i < length(x[1,])){
       i <- i+1
       lines(x[,i], z, col = colours[i])
@@ -169,7 +172,7 @@ AverageMovesToWin <- function(number.of.players = 2, number.of.trials = 1000){
     x <- x + nrow(SnakesAndLaddersGame(number.of.players))
   }
   x/number.of.trials
-  
+
 }
 AverageMovesToWin(number.of.players = 100, number.of.trials = 100)
 ```
@@ -185,7 +188,7 @@ vector.average.wins
 
 Most common square.
 ========================================================
-- Here is the code that will find the most common square given a set number of players and a number of trials. 
+- Here is the code that will find the most common square given a set number of players and a number of trials.
 
 ```{r}
 MostCommonSquare <- function(number.of.players = 1, number.of.trials = 100){
@@ -249,7 +252,7 @@ FrequencyOfSquaresByPercentage(2, 100, vector = TRUE)
 
 Frequency of all the squares
 ========================================================
-Run the following code without the hashtage to see the frequency next to the square number. 
+Run the following code without the hashtage to see the frequency next to the square number.
 
 ```{r}
 # FrequencyOfSquaresByPercentage(2, 100)
@@ -262,7 +265,7 @@ Run the following code without the hashtage to see the frequency next to the squ
 plot(FrequencyOfSquaresByPercentage(2, 100))
 ```
 
-- We can run lots of analysis on this data. 
+- We can run lots of analysis on this data.
 ```{r}
 summary(FrequencyOfSquaresByPercentage(2, 100))
 ```
@@ -311,7 +314,7 @@ ImportenceOfTheLadders(100000)
 
 Most powerful Snakes
 ========================================================
-Here we will do a similar task as before, but look for the losing player, that is the player with the lowest score at the end of the game. 
+Here we will do a similar task as before, but look for the losing player, that is the player with the lowest score at the end of the game.
 
 ```{r}
 ImportenceOfTheSnakes <- function(number.of.players = 2){
@@ -331,7 +334,7 @@ ImportenceOfTheSnakes <- function(number.of.players = 2){
   y <- as.data.frame(table(x))
   print(y)
 }
-ImportenceOfTheSnakes(7) 
+ImportenceOfTheSnakes(7)
 ```
 
 
@@ -341,7 +344,7 @@ Most powerful Snakes
 
 
 ```{r}
-ImportenceOfTheSnakes(100000) 
+ImportenceOfTheSnakes(100000)
 ```
 
 - Using similar logic as before, we find the most powerful snakes, that is, if you land on them you are most likly to lose compared to other snakes, are: 4 (16, 6), 9 (49, 11), 1 (1, 38), 2 (4, 14), 3 (9, 31), 7 (36, 44), 5 (21, 42).
@@ -351,7 +354,10 @@ ImportenceOfTheSnakes(100000)
 
 Creating a package.
 ========================================================
-So lets make this into a nice package.
+-So lets make this into a nice package.
+
+<https://github.com/hectorhaffenden/SnakesAndLaddersAnalysis>
+- Well that was fun. Now you can download this analysis package from wherever you want!
 
 
 Other methods.
