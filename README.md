@@ -1,5 +1,7 @@
 # SnakesAndLaddersAnalysis
+
 A package to model and analyse a game of snakes and ladders.
+If you have any problems email me at <haffendenh@cardiff.ac.uk>.
 
 
 # To insall simply input the following into R:
