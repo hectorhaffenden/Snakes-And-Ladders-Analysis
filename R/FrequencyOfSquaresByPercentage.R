@@ -14,3 +14,4 @@ FrequencyOfSquaresByPercentage <- function(number.of.players = 2, number.of.tria
     o
   }
 }
+FrequencyOfSquaresByPercentage(2)
