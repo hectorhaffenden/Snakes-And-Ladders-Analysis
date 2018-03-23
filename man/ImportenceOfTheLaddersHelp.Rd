@@ -18,20 +18,15 @@ Function uses the SnakesAndLaddersGame function to find and display the ladders 
 \value{
   \item{most.importent.ladders}{A data frame which shows an estimation of the most importent ladders. The higher the frequency the more importent the ladder.}
 }
-\references{
-}
+
 
 \author{ Hector Haffenden <haffendenh@cardiff.ac.uk>
 }
 
-\note{
-}
 
-\section{Warning}{I have not put a limit on the amount of time that this function will run. This is to allow as many players as you want.} ~
+\section{Warning}{I have not put a limit on the amount of time that this function will run. This is to allow as many players as you want.}
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
+
 \examples{
 ImportenceOfTheLadders(1)
 
@@ -43,3 +38,4 @@ ImportenceOfTheLadders(10000)
 
 ImportenceOfTheLadders(100000)
 
+}

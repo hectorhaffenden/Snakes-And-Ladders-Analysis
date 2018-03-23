@@ -19,18 +19,11 @@ Function that takes output from the SnakesAndLaddersGame function and plots it w
 \value{
   \item{A plot}{Plots the players position on each roll.}
 }
-\references{
-}
+
 
 \author{ Hector Haffenden <haffendenh@cardiff.ac.uk>
 }
 
-\note{
-}
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
 PlotMyGame(SnakesAndLaddersGame(1))
 
@@ -38,3 +31,4 @@ PlotMyGame(SnakesAndLaddersGame(3))
 
 PlotMyGame(SnakesAndLaddersGame(7))
 
+}

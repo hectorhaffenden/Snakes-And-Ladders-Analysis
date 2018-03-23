@@ -18,20 +18,16 @@ Function uses the SnakesAndLaddersGame function to find and display the snakes u
 \value{
   \item{most.powerful.snakes}{A data frame which shows an estimation of the most powerful snakes. The higher the frequency the more powerful the snake.}
 }
-\references{
-}
+
 
 \author{ Hector Haffenden <haffendenh@cardiff.ac.uk>
 }
 
-\note{
-}
 
-\section{Warning}{I have not put a limit on the amount of time that this function will run. This is to allow as many players as you want.} ~
 
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
+\section{Warning}{I have not put a limit on the amount of time that this function will run. This is to allow as many players as you want.}
+
+
 \examples{
 ImportenceOfTheSnakes(1)
 
@@ -43,3 +39,4 @@ ImportenceOfTheSnakes(10000)
 
 ImportenceOfTheSnakes(100000)
 
+}

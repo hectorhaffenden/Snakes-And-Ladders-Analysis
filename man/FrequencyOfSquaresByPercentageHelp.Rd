@@ -7,7 +7,8 @@
 FrequencyOfSquaresByPercentage(number.of.players, number.of.trials, vector)
 
 ## Default method:
-FrequencyOfSquaresByPercentage(number.of.players = 2, number.of.trials = 100, vector = FALSE)
+FrequencyOfSquaresByPercentage(number.of.players = 2,
+              number.of.trials = 100, vector = FALSE)
 
 }
 \arguments{
@@ -16,25 +17,20 @@ FrequencyOfSquaresByPercentage(number.of.players = 2, number.of.trials = 100, ve
   \item{vector}{Takes values TRUE or FALSE, if TRUE will display results as a vector. This is sometimes a much nicer display of results.}
 }
 \details{
-Function uses the SnakesAndLaddersGame function to find and display the frequency of how often a square is landed on, given a set number of players. it is also very useful to plot this data to see the distribution of how often a square is landed on..
+Function uses the SnakesAndLaddersGame function to find and display the frequency of how often a square is landed on, given a set number of players. it is also very useful to plot this data to see the distribution of how often a square is landed on.
+}
 \value{
   \item{Fequency.of.squares}{A numeric vector or matrix which represents how often a square is landed on in the game of Snakes and Ladders.}
-}
-\references{
 }
 
 \author{ Hector Haffenden <haffendenh@cardiff.ac.uk>
 }
 
-\note{
-}
 
 \section{Warning}{I have not put a limit on the amount of time that this function will run. This is to allow many of trials.
-} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
 }
+
+
 \examples{
 FrequencyOfSquaresByPercentage(1)
 
@@ -50,3 +46,4 @@ x <- FrequencyOfSquaresByPercentage(2)
 plot(x)
 
 
+}
