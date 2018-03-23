@@ -1,6 +1,6 @@
 Package: SnakesAndLaddersAnalysis
 Type: Package
-Title: Play and analyses the game of Snakes and Ladders.
+Title: Play and analyses the game of Snakes and Ladders
 Version: 0.1.0
 Author: Hector haffenden
 Maintainer: Hector Haffenden <haffendenh@cardiff.ac.uk>
