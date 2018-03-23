@@ -1,4 +1,4 @@
-MostCommonSquare <- function(number.of.players = 1, number.of.trials = 1000){
+MostCommonSquare <- function(number.of.players = 2, number.of.trials = 1000){
   x <- NULL
   z <- NULL
   for (i in 1:number.of.trials){
