@@ -13,4 +13,8 @@ install_github("hectorhaffenden/SnakesAndLaddersAnalysis")
 library(SnakesAndLaddersAnalysis)
 
 # 2
-Check all the help files, look at the code etc. Enjoy!
+Check all the help files, look at the code. Everything in this package should be running perfectly.
+Also browse the NAMESPACE and DESCRIPTION files to see that all required global enviroments are loaded (For the plotting section). 
+Enjoy!
+
+
