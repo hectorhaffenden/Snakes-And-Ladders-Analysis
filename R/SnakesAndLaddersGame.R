@@ -1,5 +1,7 @@
-
-SnakesAndLaddersGame <- function(number.of.players){
+SnakesAndLaddersGame <- function(number.of.players = 2){
+  if (number.of.players < 1){
+    stop("number of players must be greater than 0.")
+  }
   dice <- c(1, 2, 3, 4, 5, 6) # defining our dice, replace with 1:6
   snakes.and.ladders <- rbind(c(1, 38), c(4, 14), c(9, 31), c(16, 6), c(21, 42), c(28, 84), c(36, 44), c(48, 26), c(49, 11),
                               c(51, 67), c(56, 53), c(62, 19), c(64, 60), c(71, 91), c(80, 100), c(87, 24), c(93, 73), c(95, 75), c(98, 78))
