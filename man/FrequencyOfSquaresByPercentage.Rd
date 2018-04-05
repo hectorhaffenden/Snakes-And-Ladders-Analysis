@@ -30,12 +30,7 @@ Function uses the SnakesAndLaddersGame function to find and display the frequenc
 \examples{
 FrequencyOfSquaresByPercentage(1)
 
-FrequencyOfSquaresByPercentage(100)
-
-FrequencyOfSquaresByPercentage(100, 100)
-
-FrequencyOfSquaresByPercentage(7, 2000)
-
+FrequencyOfSquaresByPercentage(10)
 
 
 x <- FrequencyOfSquaresByPercentage(2)

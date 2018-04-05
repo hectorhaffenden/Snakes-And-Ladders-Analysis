@@ -31,8 +31,4 @@ AverageMovesToWin(1)
 
 AverageMovesToWin(100)
 
-AverageMovesToWin(100, 10000)
-
-AverageMovesToWin(7, 10000)
-
 }

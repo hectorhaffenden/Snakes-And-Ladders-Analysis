@@ -83,7 +83,6 @@ The only check i have put in this function is to ensure that the number of playe
 \examples{
 SnakesAndLaddersGame(1)
 SnakesAndLaddersGame(100)
-SnakesAndLaddersGame(1000000)
 
 # Run some analysis on this, consistant, output.
 x <- SnakesAndLaddersGame(7)

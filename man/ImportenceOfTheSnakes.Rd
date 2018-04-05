@@ -32,8 +32,6 @@ ImportenceOfTheSnakes(100)
 
 ImportenceOfTheSnakes(1000)
 
-ImportenceOfTheSnakes(10000)
 
-ImportenceOfTheSnakes(100000)
 
 }

@@ -4,7 +4,7 @@
 \description{This function uses the SnakesAndLaddersGame function to estimate the most common square in a game of snakes and ladders.
 }
 \usage{
-MostCommonSquare(number.of.players = 2, number.of.trials = 1000)
+MostCommonSquare(number.of.players = 2, number.of.trials = 500)
 }
 \arguments{
   \item{number.of.players}{A single numeric value that represents the number of players you wish to run the trial with.}
@@ -27,10 +27,4 @@ Function uses the SnakesAndLaddersGame function to find and display the most com
 MostCommonSquare(1)
 
 MostCommonSquare(100, 10)
-
-MostCommonSquare(100, 100)
-
-MostCommonSquare(100, 1000)
-
-MostCommonSquare(7)
 }

@@ -31,8 +31,4 @@ ImportenceOfTheLadders(100)
 
 ImportenceOfTheLadders(1000)
 
-ImportenceOfTheLadders(10000)
-
-ImportenceOfTheLadders(100000)
-
 }
