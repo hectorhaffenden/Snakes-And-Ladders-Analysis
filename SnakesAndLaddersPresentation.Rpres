@@ -14,9 +14,17 @@ type: sub-section
 - Hector Haffenden <haffendenh@cardiff.ac.uk>
 - Sam Davies <daviess@cardiff.ac.uk>
 - This presentation will walk you through our process and results.
-- Please also note that all of the functions used here have been made into a package with nice help files which you can access from this link <https://github.com/hectorhaffenden/SnakesAndLaddersAnalysis>.
-- Just follow the readme file.
-- Also note that my package does pass all of the checks done within RStudio.
+- Please also note that all of the functions used here have been made into a package with nice help files which you can access directly from CRAN.
+
+<https://cran.r-project.org/web/packages/SnakesAndLaddersAnalysis/>.
+
+- Use this to follow along,
+```{r}
+#    install.packages("SnakesAndLaddersAnalysis")
+#    library(SnakesAndLaddersAnalysis)
+```
+
+
 
 First iteration of Snakes and Ladders.
 ========================================================
@@ -41,12 +49,10 @@ SnakesAndLaddersGame <- function(number.of.players){
 - As we can see this is some very inefficient code.
 - So how can we improve this?
 - After research we find out r is very efficient with vectors and matrices.
-- This led to our next iteration.
+- This helped start the formation of the final iteration.
 
-
-Second and final iteration.
+Final iteration.
 ========================================================
-
 ```{r}
 SnakesAndLaddersGame <- function(number.of.players){
   dice <- c(1, 2, 3, 4, 5, 6)
@@ -64,9 +70,15 @@ SnakesAndLaddersGame <- function(number.of.players){
   }
   game.action
 }
-SnakesAndLaddersGame(10)
 ```
-- Now we can play Snakes and Ladders with as many players as our computers can handle, and it is very efficient allowing millions of players.
+
+Final iteration.
+========================================================
+```{r}
+SnakesAndLaddersGame(10)
+
+```
+- Now we can play Snakes and Ladders with as many players as our computers can handle, and it is very efficient allowing millions of players, try it.
 
 
 Optimizing this code
@@ -190,7 +202,7 @@ FrequencyOfSquaresByPercentage(2, 100, vector = TRUE)
 
 Frequency of all the squares
 ========================================================
-Run the following code without the hashtage to see the frequency next to the square number.
+Run the following code without the hashtage to see the frequency next to the square number. Better visually but 106 lines long.
 
 ```{r}
 # FrequencyOfSquaresByPercentage(2, 100)
@@ -224,13 +236,13 @@ AverageMovesToWin <- function(number.of.players = 2, number.of.trials = 1000){
   x/number.of.trials
 
 }
-AverageMovesToWin(number.of.players = 100, number.of.trials = 100)
+AverageMovesToWin(number.of.players = 7, number.of.trials = 100)
 ```
 
 - Play around with the number of players, see what it seems to converge to ;)
 
 ```{r}
-vector.average.wins <- c(AverageMovesToWin(1), AverageMovesToWin(2), AverageMovesToWin(3), AverageMovesToWin(4), AverageMovesToWin(5), AverageMovesToWin(6), AverageMovesToWin(7))
+vector.average.wins <- c(AverageMovesToWin(1), AverageMovesToWin(2), AverageMovesToWin(3), AverageMovesToWin(4), AverageMovesToWin(5), AverageMovesToWin(6), AverageMovesToWin(1000))
 vector.average.wins
 
 ```
@@ -349,7 +361,8 @@ ImportenceOfTheSnakes(100000)
 ```
 
 - Using similar logic as before, we find the most powerful snakes, that is, if you land on them you are most likly to lose compared to other snakes, are: 4 (16, 6), 9 (49, 11), 1 (1, 38), 2 (4, 14), 3 (9, 31), 7 (36, 44), 5 (21, 42).
-- What is very interesting here is that these arn't all snakes. Some ladders have appeared. Even the ladder that is almost required to win, (1, 38) often results in a loss. - We can conclude that the most powerful ladder is (16, 6).
+- What is very interesting here is that these arn't all snakes. Some ladders have appeared. Even the ladder that is almost required to win, (1, 38) often results in a loss.
+- We can conclude that the most powerful ladder is (16, 6).
 
 
 
@@ -357,9 +370,127 @@ Creating a package.
 ========================================================
 -So lets make this into a nice package.
 
-<https://github.com/hectorhaffenden/SnakesAndLaddersAnalysis>
-- Well that was fun. Now you can download this analysis package from wherever you want!
+<https://cran.r-project.org/web/packages/SnakesAndLaddersAnalysis/>
+
+Just use the following code and use the previous link to get an overview of the package.
+```{r}
+#    install.packages("SnakesAndLaddersAnalysis")
+#    library(SnakesAndLaddersAnalysis)
+```
+- Well that was fun.
 - Now you can do whatever analysis you want using the tools I have created.
+
+
+Getting the package on CRAN.
+========================================================
+- This involved alot of back and forth ensuring my package had all the correct export and import patterns in the NAMESPACE.
+```{r}
+#   importFrom("graphics", "lines", "plot")
+#   exportPattern("^[[:alpha:]]+")
+```
+
+- Ensuring that the description file was correctly formatted with the correct layout and license.
+- Running checks '--as-cran' and fixing all note, warnings and errors.
+- etc....
+- This process gave me a great appreciation of the effort that goes into creating an r package but also the power r has as an open source language and environment.
+- I also will note that now I can share these tools with anyone seamlessly and can update this package whenever I want with new tools and analysis.
+
+
+
+Exploration of the Package.
+========================================================
+Please explore this yourself.
+```{r}
+#    ?SnakesAndLaddersGame
+#    ?AverageMovesToWin
+#    ?FrequencyOfSquaresByPercentage
+#    ?ImportenceOfTheLadders
+#    ?ImportenceOfTheSnakes
+#    ?MostCommonSquare
+#    ?PlotMyGame
+```
+
+
+Summary of Results.
+========================================================
+All this analysis takes a Monte Carlo Simulation approach.
+
+1 - Number of visits we get on each square:
+- The easiest way to see the differnce here is to plot the results. We see that as the number of players increase we see an increase in the frequency of the squares early on.
+- This makes sense as more players means more likly to win in less moves therefore the frequency of squares moves towards the start.
+```{r}
+#   x <- FrequencyOfSquaresByPercentage(2, 1000)
+#   y <- FrequencyOfSquaresByPercentage(3, 1000)
+#   z <- FrequencyOfSquaresByPercentage(4, 1000)
+#   a <- FrequencyOfSquaresByPercentage(5, 1000)
+#   b <- FrequencyOfSquaresByPercentage(6, 1000)
+#   plot(x, type = "h")
+#   plot(y, type = "h")
+#   plot(z, type = "h")
+#   plot(a, type = "h")
+#   plot(b, type = "h")
+
+```
+
+- We can also see what the most common square is.
+- Do not run the following code, it takes a while, but we see for players 2 to 6 that 48 is the most common square.
+
+```{r}
+# MostCommonSquare(2, 20000)
+# MostCommonSquare(3, 20000)
+# MostCommonSquare(4, 20000)
+# MostCommonSquare(5, 20000)
+# MostCommonSquare(6, 20000)
+```
+
+Note: When run with say, 600 players, we see the most common square is 6.
+
+
+Summary of Results.
+========================================================
+
+2 - Number of moves to win:
+- Using the AverageMovesToWin() function we see, for a one player game the average moves to win is 36.62.
+```{r}
+# > AverageMovesToWin(1, 100000)
+# [1] 36.61661
+```
+- Other number of players,
+```{r}
+vector.average.wins <- c(AverageMovesToWin(2), AverageMovesToWin(3), AverageMovesToWin(4), AverageMovesToWin(5), AverageMovesToWin(6))
+vector.average.wins
+```
+
+
+
+
+
+Summary of Results.
+========================================================
+
+
+These have both been answered previously:
+
+3 - Most important snakes and ladders.
+- Most important ladder:
+
+We can conclude that the most importent snakes, in order, are: 1(1, 38), 10(51, 67) and 14 (71, 91), 6 (28, 84), 2 (4, 14), 8 (48, 26).
+
+  - Most important snake:
+
+We find the most powerful snakes, that is, if you land on them you are most likly to lose compared to other snakes, are: 4 (16, 6), 9 (49, 11), 1 (1, 38), 2 (4, 14), 3 (9, 31), 7 (36, 44), 5 (21, 42).
+
+Making the report.
+========================================================
+I decided to use the Rpres feature in R studio. This allows you to easily import code into the presentation.
+- The full code behind the presentation can be found on my github page,
+
+<https://github.com/hectorhaffenden/SnakesAndLaddersAnalysis>
+
+
+The End.
+========================================================
+Thank you for reading, hope you had fun :)
 
 
 
