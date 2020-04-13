@@ -1,3 +1,7 @@
+[![Grand Total](https://cranlogs.r-pkg.org/badges/grand-total/SnakesAndLaddersAnalysis)](https://cran.r-project.org/web/packages/SnakesAndLaddersAnalysis/index.html)
+
+
+
 # SnakesAndLaddersAnalysis
 Now on CRAN <https://cran.r-project.org/web/packages/SnakesAndLaddersAnalysis>
 
